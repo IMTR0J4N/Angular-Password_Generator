@@ -2,12 +2,68 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  template: `<h1>Hello world</h1>
+    <p
+      (color-change)="onColorChange($event)"
+      #paragraphe="hl"
+      appHighlight="blue"
+    >
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus
+      officia ex suscipit placeat eum ipsa?
+    </p>
+    <button (click)="paragraphe.onMouseEnter()">Changer la couleur</button>
+    <!-- <input
+      type="number"
+      [model]="revenu"
+      (model-change)="changeInput($event)"
+      placeholder="vos revenus"
+    /> -->
+    <!-- <input
+      type="number"
+      [model]="revenu"
+      (modelChange)="revenu = $event"
+      placeholder="vos revenus"
+    /> -->
+    <input type="number" [(model)]="revenu" placeholder="vos revenus" />
+    <button (click)="calculImpot()">Calculer IMPOTS</button>
+    <input type="text" force-lower value="LIOR" />
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea alias libero
+      ipsam eum obcaecati aliquam debitis architecto incidunt ex, deleniti
+      voluptatibus vel. Deserunt, quod esse.
+    </p>
+    <input type="text" #prenom />
+    <button (click)="addUser(prenom.value)">Add user</button>
+    <p>
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque obcaecati
+      dolore vel corrupti! Praesentium, deserunt.
+    </p>
+    <p><a no-open href="http://www.google.fr">google</a></p>
+    <p>
+      <a confirm [confirmMessage]="title" href="http://www.twitter.fr"
+        >twitter</a
+      >
+    </p>
+    <p>change from child {{ counter }}</p>
+    <app-user-profile
+      [fromParent]="3 + 3"
+      *ngFor="let user of users"
+      [user]="user"
+      (changeCasseEvent)="changeCasse($event)"
+    ></app-user-profile> `,
+  styles: [],
 })
 export class AppComponent {
   @ViewChild('prenom')
   prenom?: ElementRef<HTMLInputElement>;
+
+  revenu = 333;
+  // changeInput(value: number) {
+  //   this.revenu = value;
+  // }
+  calculImpot() {
+    console.log('je calcule les impot avec :', this.revenu);
+  }
 
   addUser(user: string) {
     this.users.push({
@@ -36,5 +92,8 @@ export class AppComponent {
     if (this.prenom) {
       this.prenom.nativeElement.value = 'veuillez mettre un prenom valide';
     }
+  }
+  onColorChange(s: string) {
+    console.log(`la couleur a changée ${s}`);
   }
 }

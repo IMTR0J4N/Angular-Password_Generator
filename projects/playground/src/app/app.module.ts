@@ -6,6 +6,8 @@ import { HighlightDirective } from './highlight.directive';
 import { NoopenDirective } from './noopen.directive';
 import { ConfirmDirective } from './confirm.directive';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ModelDirective } from './model.directive';
+import { ForceLowerDirective } from './forcelower.directive';
 
 @NgModule({
   declarations: [
@@ -13,12 +15,12 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     HighlightDirective,
     NoopenDirective,
     ConfirmDirective,
-    UserProfileComponent
+    ModelDirective,
+    UserProfileComponent,
+    ForceLowerDirective,
   ],
-  imports: [
-    BrowserModule
-  ],
+  imports: [BrowserModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
