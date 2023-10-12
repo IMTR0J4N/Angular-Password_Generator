@@ -8,6 +8,8 @@ import { ConfirmDirective } from './confirm.directive';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ModelDirective } from './model.directive';
 import { ForceLowerDirective } from './forcelower.directive';
+import { IfDirective } from './if.directive';
+import { RepeatDirective } from './repeat.directive';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { ForceLowerDirective } from './forcelower.directive';
     ModelDirective,
     UserProfileComponent,
     ForceLowerDirective,
+    IfDirective,
+    RepeatDirective,
   ],
   imports: [BrowserModule],
   providers: [],

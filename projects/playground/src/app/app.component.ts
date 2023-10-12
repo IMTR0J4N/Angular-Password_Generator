@@ -3,6 +3,16 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 @Component({
   selector: 'app-root',
   template: `<h1>Hello world</h1>
+    <a href="#" *repeat="page; let numero">LIEN {{ numero }}</a>
+    <button (click)="page = page + 1">AJOUTER PAGE</button>
+    <p *if="age > 18; else sinon">J UTILISE LA MICROSYNTHAXE</p>
+    <ng-template [if]="age > 18" [ifElse]="sinon">
+      <p>Je suis un p qui apparait</p>
+    </ng-template>
+    <ng-template #sinon>
+      <p>Je suis un p qui apparait dans le deuxieme cas</p>
+    </ng-template>
+    <button (click)="age = 15">Changer AGE</button>
     <p
       (color-change)="onColorChange($event)"
       #paragraphe="hl"
@@ -54,6 +64,8 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
   styles: [],
 })
 export class AppComponent {
+  page = 3;
+  age = 40;
   @ViewChild('prenom')
   prenom?: ElementRef<HTMLInputElement>;
 
