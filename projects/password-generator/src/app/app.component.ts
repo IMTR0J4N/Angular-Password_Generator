@@ -14,13 +14,13 @@ import { Settings } from './types';
         <hr />
         <password-controls (generateEvent)="generate()"></password-controls>
       </div>
-      <password-display [message]="message"></password-display>
+      <password-display [password]="password"></password-display>
     </div>
   </div>`,
   styles: [],
 })
 export class AppComponent {
-  message = 'Cliquez sur le bouton pour "Générer"';
+  password?: String;
 
   settings: Settings = {
     length: 20,
@@ -34,7 +34,7 @@ export class AppComponent {
   }
 
   generate() {
-    this.message = 'Un mot de passe super fort!!!';
+    this.password = 'Un mot de passe super fort!!!';
   }
 
   changeSettings(settings: Settings) {
