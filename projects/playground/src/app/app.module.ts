@@ -10,6 +10,7 @@ import { ModelDirective } from './model.directive';
 import { ForceLowerDirective } from './forcelower.directive';
 import { IfDirective } from './if.directive';
 import { RepeatDirective } from './repeat.directive';
+import { DeclarationComponent } from './declaration.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { RepeatDirective } from './repeat.directive';
     ForceLowerDirective,
     IfDirective,
     RepeatDirective,
+    DeclarationComponent,
   ],
   imports: [BrowserModule],
   providers: [],
