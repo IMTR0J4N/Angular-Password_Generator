@@ -11,6 +11,7 @@ import { ForceLowerDirective } from './forcelower.directive';
 import { IfDirective } from './if.directive';
 import { RepeatDirective } from './repeat.directive';
 import { DeclarationComponent } from './declaration.component';
+import { DeclarationService } from './declaration.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { DeclarationComponent } from './declaration.component';
     DeclarationComponent,
   ],
   imports: [BrowserModule],
-  providers: [],
+  providers: [DeclarationService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

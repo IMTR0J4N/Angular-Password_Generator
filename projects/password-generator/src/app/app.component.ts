@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Settings } from './types';
+import { PasswordGeneratorService } from './password-generator/password-generator.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,10 @@ import { Settings } from './types';
           (settings-change)="changeSettings($event)"
         ></password-settings>
         <hr />
-        <password-controls (generateEvent)="generate()"></password-controls>
+        <password-controls
+          [password]="password"
+          (generateEvent)="generate()"
+        ></password-controls>
       </div>
       <password-display [password]="password"></password-display>
     </div>
@@ -20,7 +24,7 @@ import { Settings } from './types';
   styles: [],
 })
 export class AppComponent {
-  password?: String;
+  password?: string;
 
   settings: Settings = {
     length: 20,
@@ -29,12 +33,14 @@ export class AppComponent {
     symbols: false,
   };
 
+  constructor(private PasswordGeneratorService: PasswordGeneratorService) {}
+
   get defaultSettings() {
     return { ...this.settings };
   }
 
   generate() {
-    this.password = 'Un mot de passe super fort!!!';
+    this.password = this.PasswordGeneratorService.generate(this.settings);
   }
 
   changeSettings(settings: Settings) {

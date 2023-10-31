@@ -1,23 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { Spectator, createComponentFactory } from '@ngneat/spectator';
-import { FormsModule } from '@angular/forms';
-import { PasswordDisplayComponent } from './components/password-display.component';
-import { PasswordControlsComponent } from './components/password-controls.component';
-import { PasswordSettingsComponent } from './components/password-settings.component';
+import { PasswordGeneratorService } from './password-generator/password-generator.service';
+import { PasswordGeneratorModule } from './password-generator/password-generator.module';
 
 describe('AppComponent avec TestBed', () => {
   let fixture: ComponentFixture<AppComponent>;
   let component: AppComponent;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent,
-        PasswordDisplayComponent,
-        PasswordControlsComponent,
-        PasswordSettingsComponent,
-      ],
-      imports: [FormsModule],
+      declarations: [AppComponent],
+      imports: [PasswordGeneratorModule],
     });
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
@@ -32,6 +25,10 @@ describe('AppComponent avec TestBed', () => {
     expect(password.textContent).toBe('Cliquez sur le bouton pour "Générer"');
   });
   it('should change message', () => {
+    const service = TestBed.inject(PasswordGeneratorService);
+    const spy = spyOn(service, 'generate');
+
+    spy.and.returnValue('Un mot de passe super fort!!!');
     fixture.nativeElement.querySelector('button').click();
 
     fixture.detectChanges();
@@ -54,6 +51,14 @@ describe('AppComponent avec TestBed', () => {
     lengthInput.dispatchEvent(new Event('input'));
     expect(component.settings.length).toBe(33);
   });
+  it('should show a copy button when password was generated', () => {
+    const service = TestBed.inject(PasswordGeneratorService);
+    const spy = spyOn(service, 'generate');
+    spy.and.returnValue('MOCK_PASSWORD');
+    fixture.nativeElement.querySelector('#generate').click();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('#copy')).not.toBeNull();
+  });
 });
 
 describe('AppComponent avec Spectator', () => {
@@ -61,13 +66,9 @@ describe('AppComponent avec Spectator', () => {
   let component: AppComponent;
   const createComponent = createComponentFactory({
     component: AppComponent,
-    declarations: [
-      AppComponent,
-      PasswordDisplayComponent,
-      PasswordControlsComponent,
-      PasswordSettingsComponent,
-    ],
-    imports: [FormsModule],
+    declarations: [AppComponent],
+    imports: [PasswordGeneratorModule],
+    mocks: [PasswordGeneratorService],
   });
   beforeEach(() => {
     spectator = createComponent();
@@ -78,6 +79,8 @@ describe('AppComponent avec Spectator', () => {
     expect(password).toHaveText('Cliquez sur le bouton pour "Générer"');
   });
   it('should change message', () => {
+    const service = spectator.inject(PasswordGeneratorService);
+    service.generate.and.returnValue('Un mot de passe super fort!!!');
     spectator.click('button');
     const password = spectator.query('article');
     expect(password).toHaveText('Un mot de passe super fort!!!');
@@ -91,5 +94,12 @@ describe('AppComponent avec Spectator', () => {
     expect(component.settings.symbols).toBeTrue();
     spectator.typeInElement('33', '#length');
     expect(component.settings.length).toBe(33);
+  });
+  it('should show a copy button when password was generated', () => {
+    const service = spectator.inject(PasswordGeneratorService);
+    service.generate.and.returnValue('MOCK_PASSWORD');
+    spectator.click('#generate');
+
+    expect(spectator.query('#copy')).not.toBeNull();
   });
 });
